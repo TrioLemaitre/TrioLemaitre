@@ -21,7 +21,7 @@
     <meta name="twitter:card" content="summary_large_image">
 
     <link rel="icon" href="images/internal/favicon.svg" type="image/svg+xml">
-    <link rel="preload" as="image" href="media/image/portrait-stairs.webp" fetchpriority="high">
+    <link rel="preload" as="image" href="media/image/hero.webp" fetchpriority="high">
     <link rel="preload" as="fetch" href="components/header.html" crossorigin>
     <link rel="preload" as="fetch" href="components/footer.html" crossorigin>
     <link rel="stylesheet" href="styles/fonts.css">
@@ -73,76 +73,54 @@
 
     <header id="header" aria-label="Seitenkopf">
       <div class="headerbox">
-        <a class="wordmark" href="#start">Trio Lemaître</a>
-        <a href="#booking">Booking</a>
+        <a class="wordmark" href="#start" aria-label="Trio Lemaître – Startseite"><img src="images/logo.svg" alt="Trio Lemaître"></a>
+        <a href="#kontakt">Kontakt</a>
       </div>
     </header>
 
     <main id="content" tabindex="-1">
       <section class="hero" id="start" data-nav-section aria-labelledby="hero-title">
-        <div class="hero-flank" aria-hidden="true">
-          <img src="media/image/hero.webp" alt="">
+        <div class="hero-media" aria-hidden="true">
+          <img class="hero-image hero-image--mono" src="media/image/hero.webp" alt="" width="1920" height="1277" fetchpriority="high">
+          <img class="hero-image hero-image--color" src="media/image/hero.webp" alt="" width="1920" height="1277">
         </div>
 
-        <div class="hero-stage">
-          <p class="hero-kicker">Jazz · Soul · Hip-Hop</p>
-
-          <h1 class="hero-title" id="hero-title">
-            <span>Trio</span>
-            <span>Lemaître</span>
-          </h1>
-
-          <figure class="hero-portrait">
-            <img src="media/image/portrait-stairs.webp" alt="Die drei Mitglieder von Trio Lemaître an einer Außentreppe" width="1277" height="1920" fetchpriority="high">
-          </figure>
-
-          <div class="hero-actions">
-            <a class="button-link" href="#booking">
-              <span>Band anfragen</span>
-              <span class="button-link__arrow" aria-hidden="true">↗</span>
-            </a>
-            <p class="hero-meta">Seit 2016<br>deutschlandweit unterwegs</p>
-          </div>
-        </div>
-
-        <div class="hero-flank" aria-hidden="true">
-          <img src="media/image/hero.webp" alt="">
-        </div>
-      </section>
-
-      <section class="statement" aria-labelledby="statement-title">
-        <div class="section-inner statement-grid">
-          <div data-reveal>
-            <p class="eyebrow">Die Band</p>
-            <h2 class="statement-title" id="statement-title">Drei Cousins. Eine <em>Klangsprache.</em></h2>
-          </div>
-
-          <div class="statement-copy" data-reveal>
-            <blockquote>„Sie verwandeln Genres von Jazz und Soul bis Hip-Hop mit ihrer eigenen Klangsprache.“</blockquote>
-            <p>Angefangen als Straßenmusiker, ist Trio Lemaître seit 2016 deutschlandweit unterwegs. Bestehende Songs werden nicht einfach gecovert, sondern neu gelesen: mit eigenen Texten, überraschenden Arrangements und viel Raum für den Moment.</p>
-          </div>
-        </div>
-      </section>
-
-      <div class="wide-portrait">
-        <figure data-reveal>
-          <img src="media/image/hero.webp" alt="Trio Lemaître gemeinsam in den Ästen eines großen Baumes" width="1920" height="1277" loading="lazy">
-          <figcaption>Trio Lemaître · 2025</figcaption>
+        <figure class="hero-portrait">
+          <img class="hero-portrait-image" src="media/image/portrait-stairs.webp" alt="Trio Lemaître an einer Außentreppe" width="1277" height="1920">
         </figure>
-      </div>
 
-      <div class="instrument-line" aria-label="Geige, Gitarre, Bass, Gesang, Rap und Improvisation">
-        <p aria-hidden="true">Geige · Gitarre · Bass · Gesang · Rap · Improvisation · Geige · Gitarre · Bass · Gesang · Rap · Improvisation ·</p>
-      </div>
+        <h1 class="hero-title" id="hero-title">
+          <img src="images/wortmarke_hero.svg" alt="Trio Lemaître">
+        </h1>
+
+        <div class="hero-actions">
+          <a class="button-link" href="#sound">
+            <span>Uns kennenlernen</span>
+            <span class="button-link__arrow" aria-hidden="true">↓</span>
+          </a>
+          <a class="button-link button-link--secondary" href="#kontakt">
+            <span>Band anfragen</span>
+            <span class="button-link__arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+
+        <div class="hero-intro">
+          <span class="hero-intro__kicker">Jazz · Soul · Hip-Hop</span>
+          <p class="hero-intro__text">Angefangen als Straßenmusiker ist Trio Lemaître seit 2016 deutschlandweit unterwegs. Bestehende Songs werden nicht einfach gecovert, sondern neu gelesen: mit eigenen Texten, überraschenden Arrangements und viel Raum für den Moment.</p>
+        </div>
+      </section>
 
       <section class="sound" id="sound" data-nav-section aria-labelledby="sound-title">
         <div class="section-inner">
           <div class="sound-heading">
             <div data-reveal>
-              <p class="eyebrow">Live Sessions</p>
-              <h2 id="sound-title">Erst hören. Dann buchen.</h2>
+              <p class="eyebrow">Der Sound</p>
+              <h2 id="sound-title">Jazz, Soul<br>&amp; <span class="font-baskerville">Hip-Hop.</span></h2>
             </div>
-            <p data-reveal>Fünf Stücke, fünf Perspektiven auf den Sound des Trios: vom dunklen Puls bis zur offenen Jazz-Ballade. Alle Clips werden direkt von dieser Website abgespielt – ohne externes Embed.</p>
+            <div data-reveal>
+              <blockquote>„Fünf Stücke, fünf Perspektiven auf den Sound des Trios.“</blockquote>
+              <p>Zwischen Jazz, Soul und Hip-Hop entsteht ein Livesound mit Groove, Raum für Improvisation und eigener Handschrift. Die Sessions unten zeigen, wie das klingt.</p>
+            </div>
           </div>
 
           <div class="player-layout" data-reveal>
@@ -185,6 +163,23 @@
               </button>
             </div>
           </div>
+          <div class="live-occasions" aria-label="Festivals, Konzerte und Events">
+            <article class="live-occasion live-occasion--festival" data-reveal>
+              <span class="live-occasion__mark" aria-hidden="true">✦</span>
+              <h3>Festivals</h3>
+              <p>Pulsierende Grooves, Rap und spontane Improvisation – ein Set mit Energie, Kontrast und klarer eigener Handschrift.</p>
+            </article>
+            <article class="live-occasion live-occasion--concert" data-reveal>
+              <span class="live-occasion__mark" aria-hidden="true">●</span>
+              <h3>Konzerte</h3>
+              <p>Nuanciert genug für den intimen Raum, druckvoll genug für den vollen Saal: vom zarten Gesang bis zum Bounce des Beats.</p>
+            </article>
+            <article class="live-occasion live-occasion--event" data-reveal>
+              <span class="live-occasion__mark" aria-hidden="true">↗</span>
+              <h3>Events</h3>
+              <p>Ein urbaner Livesound für besondere Abende – persönlich, musikalisch offen und weit entfernt von austauschbarer Hintergrundmusik.</p>
+            </article>
+          </div>
         </div>
       </section>
 
@@ -193,7 +188,7 @@
           <div class="band-intro">
             <div data-reveal>
               <p class="eyebrow">Das Trio</p>
-              <h2 id="band-title">Verwandt. Vertraut. Überraschend.</h2>
+              <h2 id="band-title">Drei Cousins. Eine <span class="font-baskerville">Klangsprache.</span></h2>
             </div>
             <div data-reveal>
               <blockquote>„Die Arrangements des Trios lassen stets Raum für Liveimprovisation.“</blockquote>
@@ -201,87 +196,106 @@
             </div>
           </div>
 
-          <div class="band-visual">
-            <figure data-reveal>
-              <img src="media/image/portrait-trio.webp" alt="Trio Lemaître als Bandportrait vor dunklem Hintergrund" width="1277" height="1920" loading="lazy">
-            </figure>
-            <figure data-reveal>
-              <img src="media/image/portrait-studio.webp" alt="Trio Lemaître mit Gitarre und Verstärkern in einer inszenierten Studioszene" width="1277" height="1920" loading="lazy">
-            </figure>
-          </div>
+          <div class="members-staggered" aria-label="Bandmitglieder">
+            <div class="member-card member-card--1" data-reveal>
+              <figure class="member-image">
+                <img src="media/image/benni.png" alt="Benjamin Geggus" width="1277" height="1920" loading="lazy">
+              </figure>
+              <article class="member-desc">
+                <p class="member-index">Gitarre / Stimme</p>
+                <h3>Benjamin Geggus</h3>
+                <p>Gitarrist, Sänger und Songwriter. Ausgebildet am Music College Regensburg und an der Hochschule für Kirchenmusik in Tübingen.</p>
+              </article>
+            </div>
 
-          <div class="member-list" aria-label="Bandmitglieder">
-            <article class="member" data-reveal>
-              <p class="member-index">01 · Gitarre / Stimme</p>
-              <h3>Benjamin Geggus</h3>
-              <p>Gitarrist, Sänger und Songwriter. Ausgebildet am Music College Regensburg und an der Hochschule für Kirchenmusik in Tübingen.</p>
-            </article>
-            <article class="member" data-reveal>
-              <p class="member-index">02 · Violine / Rap</p>
-              <h3>Ansgar Schwarzer</h3>
-              <p>Raptexte und Violinenklänge zwischen Liebeskummer, Sehnsucht nach Revolution und der Freude am Tanz.</p>
-            </article>
-            <article class="member" data-reveal>
-              <p class="member-index">03 · Stimme</p>
-              <h3>Eva Naemi Geggus</h3>
-              <p>Ihre warme, soulige Stimme prägt das Trio. Inspiriert von Lauryn Hill ist sie vor allem in der Berliner Jazz-Szene unterwegs.</p>
-            </article>
-          </div>
-        </div>
-      </section>
+            <div class="member-card member-card--2" data-reveal>
+              <figure class="member-image">
+                <img src="media/image/ansgar.png" alt="Ansgar Schwarzer" width="1277" height="1920" loading="lazy">
+              </figure>
+              <article class="member-desc">
+                <p class="member-index">Violine / Rap</p>
+                <h3>Ansgar Schwarzer</h3>
+                <p>Raptexte und Violinenklänge zwischen Liebeskummer, Sehnsucht nach Revolution und der Freude am Tanz.</p>
+              </article>
+            </div>
 
-      <section class="formats" id="formats" data-nav-section aria-labelledby="formats-title">
-        <div class="section-inner">
-          <div data-reveal>
-            <p class="eyebrow">Live erleben</p>
-            <h2 id="formats-title">Für Bühnen, die nach eigenem Sound suchen.</h2>
-          </div>
-
-          <div class="format-grid">
-            <article class="format-card" data-reveal>
-              <div class="format-card__top"><span>01</span><span>Open Air</span></div>
-              <div>
-                <h3>Festivals</h3>
-                <p>Pulsierende Grooves, Rap und spontane Improvisation – ein Set mit Energie, Kontrast und klarer eigener Handschrift.</p>
-              </div>
-            </article>
-            <article class="format-card" data-reveal>
-              <div class="format-card__top"><span>02</span><span>Listening Room</span></div>
-              <div>
-                <h3>Konzerte</h3>
-                <p>Nuanciert genug für den intimen Raum, druckvoll genug für den vollen Saal: vom zarten Gesang bis zum Bounce des Beats.</p>
-              </div>
-            </article>
-            <article class="format-card" data-reveal>
-              <div class="format-card__top"><span>03</span><span>Special Occasion</span></div>
-              <div>
-                <h3>Events</h3>
-                <p>Ein urbaner Livesound für besondere Abende – persönlich, musikalisch offen und weit entfernt von austauschbarer Hintergrundmusik.</p>
-              </div>
-            </article>
+            <div class="member-card member-card--3" data-reveal>
+              <figure class="member-image">
+                <img src="media/image/naemi.png" alt="Eva Naemi Geggus" width="1277" height="1920" loading="lazy">
+              </figure>
+              <article class="member-desc">
+                <p class="member-index">Stimme</p>
+                <h3>Eva Naemi Geggus</h3>
+                <p>Ihre warme, soulige Stimme prägt das Trio. Inspiriert von Lauryn Hill ist sie vor allem in der Berliner Jazz-Szene unterwegs.</p>
+              </article>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="booking" id="booking" data-nav-section aria-labelledby="booking-title">
+      <section class="booking" id="kontakt" data-nav-section aria-labelledby="booking-title">
         <div class="booking-content">
           <div data-reveal>
             <p class="eyebrow">Booking</p>
-            <h2 id="booking-title">Euer Abend. Unser nächster Groove.</h2>
+            <h2 id="booking-title">Euer Abend. Unser Groove.</h2>
           </div>
 
           <div class="booking-bottom" data-reveal>
-            <p>Festival, Konzert oder Event? Schickt uns Datum, Ort und Rahmen – wir melden uns direkt bei euch.</p>
-            <div class="booking-links">
-              <a class="button-link" href="mailto:lemaitre.musik@gmail.com?subject=Booking-Anfrage%20an%20Trio%20Lema%C3%AEtre">
-                <span>Booking anfragen</span>
-                <span class="button-link__arrow" aria-hidden="true">↗</span>
-              </a>
-              <a class="button-link" href="tel:+4915787940129">
-                <span>+49 157 87940129</span>
-                <span class="button-link__arrow" aria-hidden="true">↗</span>
-              </a>
-            </div>
+            <p>Festival, Konzert oder Event? Schickt uns eine Anfrage über das Formular oder meldet euch direkt telefonisch bei uns unter <a href="tel:+4915787940129" class="text-link"><strong>+49 157 87940129</strong></a>.</p>
+
+            <form id="bookingForm" action="https://formsubmit.co/lemaitre.musik@gmail.com" method="POST" novalidate class="booking-form">
+              <!-- Honeypot -->
+              <input type="text" name="_honey" style="display:none">
+
+              <!-- FormSubmit.co Configuration -->
+              <input type="hidden" name="_subject" value="Neue Booking-Anfrage - Trio Lemaître">
+              <input type="hidden" name="_captcha" value="false">
+              <input type="hidden" name="_template" value="table">
+
+              <!-- Name Input -->
+              <div class="booking-form-group">
+                <label for="bookingName">Name / Veranstalter</label>
+                <input type="text" id="bookingName" name="name" class="booking-form-control" required placeholder="Euer Name">
+              </div>
+
+              <!-- Email Input -->
+              <div class="booking-form-group">
+                <label for="bookingEmail">E-Mail</label>
+                <input type="email" id="bookingEmail" name="email" class="booking-form-control" required placeholder="e-mail@beispiel.de">
+              </div>
+
+              <!-- Datum & Ort Row -->
+              <div class="booking-form-row">
+                <div class="booking-form-group">
+                  <label for="bookingDate">Datum</label>
+                  <input type="text" id="bookingDate" name="date" class="booking-form-control" placeholder="TT.MM.JJJJ">
+                </div>
+                <div class="booking-form-group">
+                  <label for="bookingLocation">Ort / Stadt</label>
+                  <input type="text" id="bookingLocation" name="location" class="booking-form-control" required placeholder="z.B. Berlin">
+                </div>
+              </div>
+
+              <!-- Message TextArea -->
+              <div class="booking-form-group">
+                <label for="bookingMessage">Details zum Event</label>
+                <textarea id="bookingMessage" name="message" class="booking-form-control" required placeholder="Erzählt uns ein bisschen von der geplanten Veranstaltung (Rahmen, Dauer...)"></textarea>
+              </div>
+
+              <!-- Datenschutz Checkbox -->
+              <label class="booking-form-checkbox" for="bookingAcceptPrivacy">
+                <input type="checkbox" id="bookingAcceptPrivacy" required>
+                <span>Ich habe die <a href="datenschutz.html" target="_blank">Datenschutzerklärung</a> gelesen und akzeptiere sie.</span>
+              </label>
+
+              <!-- Submit Button -->
+              <div>
+                <button type="submit" class="button-link btn-booking-submit">
+                  <span>Anfrage senden</span>
+                  <span class="button-link__arrow" aria-hidden="true">↗</span>
+                </button>
+              </div>
+            </form>
           </div>
         </div>
 

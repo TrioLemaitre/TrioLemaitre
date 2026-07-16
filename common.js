@@ -113,8 +113,10 @@ function init() {
   });
 
   init_content_scroll();
+  init_hero_spotlight();
   init_reveals();
   init_section_navigation();
+  init_booking_form();
 
   if (typeof post_init === "function") {
     post_init();
@@ -232,6 +234,7 @@ function init_content_scroll() {
 function update_scroll_state() {
   const content = document.getElementById("content");
   const header = document.getElementById("header");
+  const hero = document.querySelector(".hero");
   const topButton = document.getElementById("to-top");
   const progress = document.getElementById("scroll-progress-bar");
 
@@ -246,13 +249,75 @@ function update_scroll_state() {
     progress.style.transform = "scaleX(" + ratio + ")";
   }
 
+  let threshold = content.clientHeight * 0.75;
+  const isHomePage = document.body.classList.contains("home");
+  if (isHomePage && hero) {
+    threshold = hero.offsetHeight;
+  }
+
+  const showWidgets = content.scrollTop >= threshold;
+
   if (header) {
     header.classList.toggle("is-scrolled", content.scrollTop > 24);
+    if (isHomePage && hero) {
+      header.classList.toggle("is-visible", showWidgets);
+    }
   }
 
   if (topButton) {
-    topButton.classList.toggle("is-visible", content.scrollTop > content.clientHeight * 0.75);
+    topButton.classList.toggle("is-visible", showWidgets);
   }
+}
+
+function init_hero_spotlight() {
+  const hero = document.querySelector(".hero");
+  const content = document.getElementById("content");
+  const portrait = document.querySelector(".hero-portrait");
+
+  if (!hero || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    return;
+  }
+
+  const pointer = {
+    x: window.innerWidth / 2,
+    y: window.innerHeight / 2
+  };
+
+  function set_spotlight() {
+    const bounds = hero.getBoundingClientRect();
+    const x = ((pointer.x - bounds.left) / bounds.width) * 100;
+    const y = ((pointer.y - bounds.top) / bounds.height) * 100;
+
+    hero.style.setProperty("--spotlight-x", x + "%");
+    hero.style.setProperty("--spotlight-y", y + "%");
+    hero.style.setProperty("--spotlight-size", "clamp(8rem, 15vw, 15rem)");
+
+    if (portrait) {
+      portrait.classList.add("has-spotlight");
+      const pBounds = portrait.getBoundingClientRect();
+      const px = ((pointer.x - pBounds.left) / pBounds.width) * 100;
+      const py = ((pointer.y - pBounds.top) / pBounds.height) * 100;
+      portrait.style.setProperty("--spotlight-x", px + "%");
+      portrait.style.setProperty("--spotlight-y", py + "%");
+    }
+  }
+
+  function sync_spotlight() {
+    set_spotlight();
+  }
+
+  document.addEventListener("pointermove", function (event) {
+    pointer.x = event.clientX;
+    pointer.y = event.clientY;
+    sync_spotlight();
+  }, { passive: true });
+
+  if (content) {
+    content.addEventListener("scroll", sync_spotlight, { passive: true });
+  }
+
+  window.addEventListener("resize", sync_spotlight, { passive: true });
+  sync_spotlight();
 }
 
 function init_reveals() {
@@ -477,5 +542,91 @@ function on_dom_ready(callback) {
     document.addEventListener("DOMContentLoaded", callback, { once: true });
   } else {
     callback();
+  }
+}
+
+function init_booking_form() {
+  const form = document.getElementById("bookingForm");
+
+  if (form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const nameInput = document.getElementById("bookingName");
+      const emailInput = document.getElementById("bookingEmail");
+      const dateInput = document.getElementById("bookingDate");
+      const locationInput = document.getElementById("bookingLocation");
+      const messageInput = document.getElementById("bookingMessage");
+      const acceptPrivacyInput = document.getElementById("bookingAcceptPrivacy");
+      const submitBtn = form.querySelector(".btn-booking-submit");
+
+      if (!nameInput.value.trim() || !emailInput.value.trim() || !locationInput.value.trim() || !messageInput.value.trim()) {
+        alert("Bitte füllt Name, E-Mail, Ort und Details zum Event aus.");
+        return;
+      }
+
+      if (!acceptPrivacyInput || !acceptPrivacyInput.checked) {
+        alert("Bitte lest und akzeptiert die Datenschutzerklärung.");
+        return;
+      }
+
+      const submitText = submitBtn.querySelector("span");
+      const originalText = submitText ? submitText.textContent : "Anfrage senden";
+      if (submitText) {
+        submitText.textContent = "Wird gesendet...";
+      }
+      submitBtn.disabled = true;
+
+      const formData = {
+        name: nameInput.value.trim(),
+        email: emailInput.value.trim(),
+        date: dateInput ? dateInput.value.trim() : "",
+        location: locationInput.value.trim(),
+        message: messageInput.value.trim(),
+        _subject: "Neue Kontakt-Anfrage - Trio Lemaître",
+        _captcha: "false",
+        _template: "table"
+      };
+
+      const honeyInput = form.querySelector('input[name="_honey"]');
+      if (honeyInput && honeyInput.value) {
+        formData["_honey"] = honeyInput.value;
+      }
+
+      fetch("https://formsubmit.co/ajax/lemaitre.musik@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(function (response) {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Form submission failed");
+        }
+      })
+      .then(function (data) {
+        const bookingBottom = document.querySelector(".booking-bottom");
+        if (bookingBottom) {
+          bookingBottom.innerHTML = `
+            <div class="booking-success-message" style="border: 1px solid var(--color-ink); padding: 2rem; background: var(--color-paper); color: var(--color-ink); text-align: center; margin-top: 2rem;">
+              <h3 style="font-family: Baskervville, serif; font-style: italic; font-size: 1.8rem; margin-top: 0; margin-bottom: 1rem;">Vielen Dank für eure Anfrage!</h3>
+              <p style="margin: 0; font-size: 1rem; line-height: 1.6;">Wir haben eure Kontakt-Anfrage erhalten und melden uns so schnell wie möglich bei euch.</p>
+            </div>
+          `;
+        }
+      })
+      .catch(function (error) {
+        console.error("Error submitting booking form:", error);
+        alert("Es gab ein Problem beim Senden des Formulars. Bitte versucht es später noch einmal oder wendet euch direkt per Mail an lemaitre.musik@gmail.com");
+        if (submitText) {
+          submitText.textContent = originalText;
+        }
+        submitBtn.disabled = false;
+      });
+    });
   }
 }

@@ -143,9 +143,18 @@ ol {
   overflow-y: auto;
   overscroll-behavior: contain;
   scroll-padding-top: calc(var(--header-box-height) + (var(--header-top-offset) * 3));
-  scrollbar-color: var(--color-orange) transparent;
-  scrollbar-width: thin;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   transition: opacity 300ms ease;
+  scroll-behavior: smooth;
+}
+
+#content::-webkit-scrollbar {
+  display: none;
+}
+
+.home #content {
+  padding-top: 0;
 }
 
 .js body.is-loading #content {
@@ -197,7 +206,8 @@ article {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  transition: background-color 180ms ease, color 180ms ease, transform 180ms ease;
+  border-radius: 0px;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
 }
 
 .button-link .button-link__arrow {
@@ -232,6 +242,22 @@ article {
   pointer-events: none;
 }
 
+.js .home #header {
+  transform: translateY(calc(-100% - var(--header-top-offset)));
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 300ms cubic-bezier(0.2, 0.7, 0.2, 1), transform 300ms cubic-bezier(0.2, 0.7, 0.2, 1), visibility 0s linear 300ms;
+}
+
+.js .home #header.is-visible {
+  transform: none;
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
 .headerbox {
   position: relative;
   display: grid;
@@ -241,16 +267,15 @@ article {
   grid-template-columns: auto 1fr;
   align-items: center;
   border: 1px solid rgba(23, 23, 20, 0.9);
-  background: rgba(241, 236, 226, 0.94);
+  background: var(--color-blue);
   box-shadow: 0 0 0 rgba(23, 23, 20, 0);
   pointer-events: auto;
   transition: background-color 220ms ease, box-shadow 220ms ease;
-  backdrop-filter: blur(12px);
 }
 
 #header.is-scrolled .headerbox,
 #header.menu-open .headerbox {
-  background: rgba(241, 236, 226, 0.98);
+  background: var(--color-blue);
   box-shadow: 0 0.5rem 2rem rgba(23, 23, 20, 0.1);
 }
 
@@ -258,12 +283,13 @@ article {
   display: flex;
   min-height: var(--header-row-height);
   align-items: center;
-  gap: 0.35em;
   padding-inline: 1rem;
-  color: var(--color-orange);
-  font-size: clamp(1.2rem, 1rem + 0.8vw, 1.7rem);
-  font-weight: 900;
-  letter-spacing: -0.05em;
+}
+
+.wordmark img {
+  display: block;
+  width: clamp(11rem, 16vw, 16rem);
+  height: auto;
 }
 
 .site-navigation {
@@ -284,7 +310,7 @@ article {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  transition: background-color 180ms ease, color 180ms ease;
+  transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
 }
 
 .site-navigation a::after {
@@ -307,6 +333,14 @@ article {
 .site-navigation .nav-booking {
   background: var(--color-ink);
   color: var(--color-paper);
+  gap: 0.45rem;
+}
+
+.site-navigation .nav-booking__arrow {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+  transform: translateY(0.08em);
 }
 
 .menu-toggle {
@@ -323,6 +357,7 @@ article {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
+  transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
 }
 
 .menu-toggle__icon {
@@ -397,12 +432,15 @@ article {
   font-size: 0.95rem;
 }
 
-.footer-wordmark {
-  color: var(--color-orange);
-  font-size: clamp(2.4rem, 1.6rem + 3vw, 4.7rem);
-  font-weight: 900;
-  line-height: 0.85;
-  letter-spacing: -0.07em;
+.footer-logo {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+}
+
+.footer-logo img {
+  display: block;
+  width: clamp(11rem, 16vw, 16rem);
+  height: auto;
 }
 
 .footer-label {
@@ -449,7 +487,8 @@ article {
   opacity: 0;
   pointer-events: none;
   visibility: hidden;
-  transition: opacity 180ms ease, transform 180ms ease, background-color 180ms ease, visibility 0s linear 180ms;
+  border-radius: 0px;
+  transition: opacity 300ms cubic-bezier(0.2, 0.7, 0.2, 1), transform 180ms ease, background-color 180ms ease, border-color 180ms ease, color 180ms ease, visibility 0s linear 300ms;
 }
 
 .to-top.is-visible {
@@ -561,24 +600,35 @@ article {
 
 @media (hover: hover) {
   .button-link:hover {
-    transform: translateY(-2px);
-    background: currentColor;
+    transform: scale(0.92);
+    background: var(--color-orange);
+    border-color: var(--color-ink);
+    color: var(--color-ink);
   }
 
   .button-link:hover > span {
-    color: var(--color-paper);
+    color: var(--color-ink);
   }
 
   .button-link:hover .button-link__arrow {
-    transform: translate(0.2rem, -0.2rem);
+    transform: none;
   }
 
   .site-navigation a:hover {
     background: var(--color-blue-light);
+    color: #fff;
+    border-left-color: #fff;
   }
 
   .site-navigation .nav-booking:hover {
-    background: var(--color-orange-deep);
+    background: var(--color-orange);
+    color: #fff;
+    border-left-color: #fff;
+  }
+
+  .menu-toggle:hover {
+    color: #fff;
+    border-left-color: #fff;
   }
 
   .footer-contact a:hover,
@@ -591,7 +641,10 @@ article {
   }
 
   .to-top:hover {
-    background: var(--color-orange-deep);
+    background: var(--color-orange);
+    border-color: var(--color-ink);
+    color: var(--color-ink);
+    transform: scale(0.92);
   }
 }
 
@@ -623,7 +676,7 @@ article {
     display: grid;
     transform: translateY(-0.7rem);
     border: 1px solid var(--color-ink);
-    background: var(--color-cream);
+    background: var(--color-blue);
     opacity: 0;
     pointer-events: none;
     visibility: hidden;
