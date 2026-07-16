@@ -219,6 +219,54 @@ article {
   border-bottom: 1px solid currentColor;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  html.has-custom-cursor,
+  html.has-custom-cursor * {
+    cursor: none !important;
+  }
+
+  /* Native video controls live in a browser shadow tree and need an explicit override. */
+  html.has-custom-cursor video,
+  html.has-custom-cursor video::-webkit-media-controls,
+  html.has-custom-cursor video::-webkit-media-controls-enclosure,
+  html.has-custom-cursor video::-webkit-media-controls-panel,
+  html.has-custom-cursor video::-webkit-media-controls-play-button,
+  html.has-custom-cursor video::-webkit-media-controls-timeline,
+  html.has-custom-cursor video::-webkit-media-controls-current-time-display,
+  html.has-custom-cursor video::-webkit-media-controls-time-remaining-display,
+  html.has-custom-cursor video::-webkit-media-controls-mute-button,
+  html.has-custom-cursor video::-webkit-media-controls-volume-slider,
+  html.has-custom-cursor video::-webkit-media-controls-fullscreen-button {
+    cursor: none !important;
+  }
+
+  .custom-cursor {
+    position: fixed;
+    top: var(--cursor-y, -100px);
+    left: var(--cursor-x, -100px);
+    z-index: 1000;
+    width: 1.45rem;
+    height: 1.45rem;
+    border: 3px solid var(--color-blue);
+    border-radius: 50%;
+    background: var(--color-orange);
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: width 150ms ease, height 150ms ease, border-radius 150ms ease, opacity 150ms ease;
+  }
+
+  .custom-cursor.is-visible {
+    opacity: 1;
+  }
+
+  .custom-cursor.is-text {
+    width: 0.62rem;
+    height: 1.65rem;
+    border-radius: 0.2rem;
+  }
+}
+
 .js [data-reveal] {
   opacity: 0;
   transform: translateY(2rem);
@@ -230,10 +278,6 @@ article {
   transform: none;
 }
 
-/* Shared header component */
-
-#header {
-  position: fixed;
 /* Legal and utility pages */
 
 .legal-page #content {

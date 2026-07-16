@@ -282,7 +282,7 @@
 
 .sound-heading > div:last-child {
   display: grid;
-  width: min(100%, 26rem);
+  width: min(100%, 22rem);
   justify-self: end;
   gap: 1.5rem;
 }
@@ -301,27 +301,28 @@
   line-height: 1.6;
 }
 
-.sound-instagram {
-  display: flex;
-  justify-content: center;
-  margin-top: clamp(4rem, 8vw, 8rem);
+.sound-video-stack {
+  display: grid;
+  gap: 1rem;
 }
 
 .instagram-link {
   display: inline-flex;
   width: fit-content;
   align-items: center;
-  gap: 0.85rem;
+  justify-self: start;
+  gap: 1rem;
+  padding-block: 0.4rem;
   color: var(--color-paper);
 }
 
 .instagram-button {
   position: relative;
   display: block;
-  width: 6.8rem;
-  height: 6.8rem;
+  width: 4.6rem;
+  height: 4.6rem;
   flex: 0 0 auto;
-  transform: rotate(-10deg);
+  transform: none;
   transition: transform 180ms ease;
 }
 
@@ -347,25 +348,25 @@
 .instagram-button__icon {
   top: 50%;
   left: 50%;
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 1.65rem;
+  height: 1.65rem;
   transform: translate(-50%, -50%) rotate(4deg);
   color: var(--color-ink);
 }
 
 .instagram-link__label {
   font-family: var(--font-editorial);
-  font-size: var(--font-medium);
+  font-size: clamp(1.25rem, 1.05rem + 1vw, 1.85rem);
   font-style: italic;
-  line-height: 1;
+  line-height: 1.1;
 }
 
 @media (hover: hover) {
-  .instagram-link:hover .instagram-button {
-    transform: rotate(8deg) scale(1.08);
+  .instagram-button:hover {
+    transform: rotate(12deg) scale(1.08);
   }
 
-  .instagram-link:hover .instagram-button__shape path {
+  .instagram-button:hover .instagram-button__shape path {
     fill: var(--color-orange);
   }
 
@@ -531,7 +532,7 @@
 
 .band-intro > div:last-child {
   display: grid;
-  width: min(100%, 26rem);
+  width: min(100%, 22rem);
   justify-self: end;
   gap: 1.5rem;
 }
@@ -845,20 +846,10 @@
 }
 
 .btn-booking-submit {
-  background: var(--color-ink);
-  color: var(--color-paper);
+  background: var(--color-blue);
+  color: var(--color-ink);
   border: 1px solid var(--color-ink);
   cursor: pointer;
-}
-
-.btn-booking-submit:hover {
-  background: var(--color-paper) !important;
-  color: var(--color-ink) !important;
-  border-color: var(--color-ink) !important;
-}
-
-.btn-booking-submit:hover > span {
-  color: var(--color-ink) !important;
 }
 
 .booking-image {
@@ -879,22 +870,23 @@
     background: rgba(248, 245, 238, 0.1);
   }
 
-  .booking-links .button-link:first-child:hover {
-    background: var(--color-blue-light);
+  .booking-links .button-link:hover {
+    background: var(--color-blue);
+    color: var(--color-ink);
+    border-color: var(--color-ink);
+  }
+
+  .booking-links .button-link:hover > span {
     color: var(--color-ink);
   }
 
-  .booking-links .button-link:first-child:hover > span {
-    color: var(--color-ink);
-  }
-
-  .booking-links .button-link:last-child:hover {
+  .booking .btn-booking-submit:hover {
     background: var(--color-paper);
     color: var(--color-ink);
-    border-color: var(--color-paper);
+    border-color: var(--color-ink);
   }
 
-  .booking-links .button-link:last-child:hover > span {
+  .booking .btn-booking-submit:hover > span {
     color: var(--color-ink);
   }
 }
@@ -964,6 +956,11 @@
   .sound-heading,
   .band-intro {
     grid-template-columns: 1fr;
+  }
+
+  .sound-heading > div:last-child,
+  .band-intro > div:last-child {
+    justify-self: start;
   }
 
   .statement-copy {

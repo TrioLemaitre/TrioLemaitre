@@ -113,6 +113,7 @@ function init() {
   });
 
   init_content_scroll();
+  init_custom_cursor();
   init_hero_spotlight();
   init_reveals();
   init_section_navigation();
@@ -318,6 +319,71 @@ function init_hero_spotlight() {
 
   window.addEventListener("resize", sync_spotlight, { passive: true });
   sync_spotlight();
+}
+
+function init_custom_cursor() {
+  const supportsCustomCursor = window.matchMedia("(hover: hover) and (pointer: fine)");
+
+  if (!supportsCustomCursor.matches || prefers_reduced_motion()) {
+    return;
+  }
+
+  const cursor = document.createElement("div");
+  const root = document.documentElement;
+  const textSelector = "p, h1, h2, h3, h4, h5, h6, blockquote, li, dt, dd, figcaption, .eyebrow, .hero-kicker";
+  let pendingFrame = null;
+  let pointerX = -100;
+  let pointerY = -100;
+
+  cursor.className = "custom-cursor";
+  cursor.setAttribute("aria-hidden", "true");
+  document.body.appendChild(cursor);
+  root.classList.add("has-custom-cursor");
+
+  function updateCursor() {
+    cursor.style.setProperty("--cursor-x", pointerX + "px");
+    cursor.style.setProperty("--cursor-y", pointerY + "px");
+    cursor.classList.add("is-visible");
+    pendingFrame = null;
+  }
+
+  function setCursorType(target) {
+    if (!(target instanceof Element)) {
+      return;
+    }
+
+    const overInteractive = target.closest("a, button, input, textarea, select, label, [role='button']");
+    const overText = target.closest(textSelector);
+    cursor.classList.toggle("is-text", Boolean(overText) && !overInteractive);
+  }
+
+  document.addEventListener("pointermove", function (event) {
+    if (event.pointerType !== "mouse") {
+      return;
+    }
+
+    pointerX = event.clientX;
+    pointerY = event.clientY;
+    setCursorType(event.target);
+
+    if (pendingFrame === null) {
+      pendingFrame = window.requestAnimationFrame(updateCursor);
+    }
+  }, { passive: true });
+
+  document.addEventListener("pointerover", function (event) {
+    setCursorType(event.target);
+  }, { passive: true });
+
+  document.addEventListener("mouseout", function (event) {
+    if (!event.relatedTarget) {
+      cursor.classList.remove("is-visible");
+    }
+  }, { passive: true });
+
+  window.addEventListener("blur", function () {
+    cursor.classList.remove("is-visible");
+  });
 }
 
 function init_reveals() {
