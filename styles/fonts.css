@@ -1,0 +1,32 @@
+@font-face {
+  font-family: "Gespenst";
+  src: url("../fonts/Gespenst/Gespenst-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Gespenst";
+  src: url("../fonts/Gespenst/Gespenst-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Gespenst";
+  src: url("../fonts/Gespenst/Gespenst-Black.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baskervville";
+  src: url("../fonts/Baskervville/Baskervville-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
