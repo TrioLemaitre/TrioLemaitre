@@ -220,23 +220,23 @@ article {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  html.has-custom-cursor,
-  html.has-custom-cursor * {
+  html,
+  html * {
     cursor: none !important;
   }
 
   /* Native video controls live in a browser shadow tree and need an explicit override. */
-  html.has-custom-cursor video,
-  html.has-custom-cursor video::-webkit-media-controls,
-  html.has-custom-cursor video::-webkit-media-controls-enclosure,
-  html.has-custom-cursor video::-webkit-media-controls-panel,
-  html.has-custom-cursor video::-webkit-media-controls-play-button,
-  html.has-custom-cursor video::-webkit-media-controls-timeline,
-  html.has-custom-cursor video::-webkit-media-controls-current-time-display,
-  html.has-custom-cursor video::-webkit-media-controls-time-remaining-display,
-  html.has-custom-cursor video::-webkit-media-controls-mute-button,
-  html.has-custom-cursor video::-webkit-media-controls-volume-slider,
-  html.has-custom-cursor video::-webkit-media-controls-fullscreen-button {
+  html video,
+  html video::-webkit-media-controls,
+  html video::-webkit-media-controls-enclosure,
+  html video::-webkit-media-controls-panel,
+  html video::-webkit-media-controls-play-button,
+  html video::-webkit-media-controls-timeline,
+  html video::-webkit-media-controls-current-time-display,
+  html video::-webkit-media-controls-time-remaining-display,
+  html video::-webkit-media-controls-mute-button,
+  html video::-webkit-media-controls-volume-slider,
+  html video::-webkit-media-controls-fullscreen-button {
     cursor: none !important;
   }
 
@@ -253,7 +253,7 @@ article {
     opacity: 0;
     pointer-events: none;
     transform: translate(-50%, -50%);
-    transition: width 150ms ease, height 150ms ease, border-radius 150ms ease, opacity 150ms ease;
+    transition: width 150ms ease, height 150ms ease, border-radius 150ms ease, opacity 150ms ease, background-color 150ms ease, border-color 150ms ease;
   }
 
   .custom-cursor.is-visible {
@@ -264,6 +264,13 @@ article {
     width: 0.62rem;
     height: 1.65rem;
     border-radius: 0.2rem;
+  }
+
+  .custom-cursor.is-hover {
+    width: 2.2rem;
+    height: 2.2rem;
+    background: transparent;
+    border-color: var(--color-orange);
   }
 }
 

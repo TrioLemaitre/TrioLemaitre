@@ -324,7 +324,7 @@ function init_hero_spotlight() {
 function init_custom_cursor() {
   const supportsCustomCursor = window.matchMedia("(hover: hover) and (pointer: fine)");
 
-  if (!supportsCustomCursor.matches || prefers_reduced_motion()) {
+  if (!supportsCustomCursor.matches) {
     return;
   }
 
@@ -355,6 +355,7 @@ function init_custom_cursor() {
     const overInteractive = target.closest("a, button, input, textarea, select, label, [role='button']");
     const overText = target.closest(textSelector);
     cursor.classList.toggle("is-text", Boolean(overText) && !overInteractive);
+    cursor.classList.toggle("is-hover", Boolean(overInteractive));
   }
 
   document.addEventListener("pointermove", function (event) {

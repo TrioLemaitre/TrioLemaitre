@@ -150,7 +150,7 @@
 
   .scroll-progress {
     width: min(100%, var(--content-width));
-    height: 3px;
+    height: 6px;
     margin-inline: auto;
     overflow: hidden;
     pointer-events: none;
@@ -205,6 +205,8 @@
       right: -1px;
       left: -1px;
       display: grid;
+      grid-template-columns: 1fr;
+      justify-content: stretch;
       transform: translateY(-0.7rem);
       border: 1px solid var(--color-ink);
       background: var(--color-blue);
@@ -224,7 +226,7 @@
 
     .site-navigation a {
       min-height: 3.8rem;
-      justify-content: space-between;
+      justify-content: center;
       border-top: 1px solid rgba(23, 23, 20, 0.25);
       border-left: 0;
     }

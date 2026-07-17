@@ -310,47 +310,36 @@
   display: inline-flex;
   width: fit-content;
   align-items: center;
-  justify-self: start;
-  gap: 1rem;
+  justify-self: center;
+  margin-left: clamp(0.5rem, 4vw, 2rem);
+  gap: 1.25rem;
   padding-block: 0.4rem;
   color: var(--color-paper);
+  text-decoration: none;
 }
 
 .instagram-button {
   position: relative;
-  display: block;
-  width: 4.6rem;
-  height: 4.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5.5rem;
+  height: 5.5rem;
   flex: 0 0 auto;
-  transform: none;
-  transition: transform 180ms ease;
-}
-
-.instagram-button__shape,
-.instagram-button__icon {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  border-radius: 50%;
+  background: var(--color-blue-light);
+  border: 2px solid var(--color-paper);
+  transition: transform 180ms cubic-bezier(0.2, 0.7, 0.2, 1), background-color 180ms ease, border-color 180ms ease;
 }
 
 .instagram-button__shape {
-  overflow: visible;
-}
-
-.instagram-button__shape path {
-  fill: var(--color-blue-light);
-  stroke: var(--color-paper);
-  stroke-width: 2;
-  vector-effect: non-scaling-stroke;
+  display: none;
 }
 
 .instagram-button__icon {
-  top: 50%;
-  left: 50%;
-  width: 1.65rem;
-  height: 1.65rem;
-  transform: translate(-50%, -50%) rotate(4deg);
+  width: 2.2rem;
+  height: 2.2rem;
+  transform: rotate(4deg);
   color: var(--color-ink);
 }
 
@@ -358,16 +347,15 @@
   font-family: var(--font-editorial);
   font-size: clamp(1.25rem, 1.05rem + 1vw, 1.85rem);
   font-style: italic;
-  line-height: 1.1;
+  line-height: 1.2;
+  text-align: right;
 }
 
 @media (hover: hover) {
-  .instagram-button:hover {
-    transform: rotate(12deg) scale(1.08);
-  }
-
-  .instagram-button:hover .instagram-button__shape path {
-    fill: var(--color-orange);
+  .instagram-link:hover .instagram-button {
+    transform: rotate(12deg) scale(1.1);
+    background: var(--color-orange);
+    border-color: var(--color-orange-bright);
   }
 
   .instagram-link:hover .instagram-link__label {
