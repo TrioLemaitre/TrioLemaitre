@@ -260,17 +260,14 @@ article {
     opacity: 1;
   }
 
-  .custom-cursor.is-text {
-    width: 0.62rem;
-    height: 1.65rem;
-    border-radius: 0.2rem;
+  .custom-cursor.is-video-playing-idle {
+    opacity: 0 !important;
   }
 
-  .custom-cursor.is-hover {
-    width: 2.2rem;
-    height: 2.2rem;
-    background: transparent;
-    border-color: var(--color-orange);
+  .custom-cursor.is-text {
+    width: 0.5rem;
+    height: 1.65rem;
+    border-radius: 0.1rem;
   }
 }
 
