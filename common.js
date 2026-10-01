@@ -464,7 +464,6 @@ function init_video_showcase() {
 
   const player = document.getElementById("session-player");
   const buttons = document.querySelectorAll("[data-media-index]");
-  const storedIndex = Number(storage_get("triolemaitre_media_index", "0"));
   const storedVolume = Number(storage_get("triolemaitre_media_volume", "0.85"));
 
   if (!player) {
@@ -476,16 +475,28 @@ function init_video_showcase() {
   // Custom Video Controls initialization
   const wrapper = player.closest(".video-wrapper");
   if (wrapper) {
+    const panel = player.closest(".player-layout").querySelector(".player-panel");
     const controls = wrapper.querySelector(".custom-video-controls");
+    const startButton = wrapper.querySelector(".video-start-button");
     const playPauseBtn = controls.querySelector(".play-pause-btn");
     const playIcon = playPauseBtn.querySelector(".icon-play");
     const pauseIcon = playPauseBtn.querySelector(".icon-pause");
     
-    const progressContainer = controls.querySelector(".progress-container");
+    const progressContainer = panel.querySelector(".session-track");
     const progressSlider = progressContainer.querySelector(".progress-slider");
     const progressFill = progressContainer.querySelector(".progress-track-fill");
-    const currentTimeDisplay = progressContainer.querySelector(".current-time");
-    const durationTimeDisplay = progressContainer.querySelector(".duration-time");
+    const fullscreenSlider = controls.querySelector(".fullscreen-progress-slider");
+    const fullscreenFill = controls.querySelector(".fullscreen-progress-fill");
+    fullscreenSlider.addEventListener("input", function () {
+      progressSlider.value = fullscreenSlider.value;
+      progressSlider.dispatchEvent(new Event("input"));
+    });
+    fullscreenSlider.addEventListener("change", function () {
+      progressSlider.value = fullscreenSlider.value;
+      progressSlider.dispatchEvent(new Event("change"));
+    });
+    const currentTimeDisplay = controls.querySelector(".current-time");
+    const durationTimeDisplay = controls.querySelector(".duration-time");
     
     const muteBtn = controls.querySelector(".mute-btn");
     const volumeUpIcon = muteBtn.querySelector(".icon-volume-up");
@@ -515,15 +526,21 @@ function init_video_showcase() {
     }
 
     playPauseBtn.addEventListener("click", togglePlay);
+    startButton.addEventListener("click", togglePlay);
     player.addEventListener("click", togglePlay);
 
     player.addEventListener("play", function () {
+      wrapper.classList.add("has-started");
+      player.closest(".player-layout").classList.add("has-played");
+      showControls();
+      playPauseBtn.setAttribute("aria-label", "Pausieren");
       playIcon.style.display = "none";
       pauseIcon.style.display = "block";
       resetIdleTimer();
     });
 
     player.addEventListener("pause", function () {
+      playPauseBtn.setAttribute("aria-label", "Abspielen");
       playIcon.style.display = "block";
       pauseIcon.style.display = "none";
       showControls();
@@ -532,6 +549,8 @@ function init_video_showcase() {
     player.addEventListener("ended", function () {
       progressSlider.value = 0;
       progressFill.style.width = "0%";
+      fullscreenSlider.value = "0";
+      fullscreenFill.style.width = "0%";
       currentTimeDisplay.textContent = formatTime(0);
       playIcon.style.display = "block";
       pauseIcon.style.display = "none";
@@ -543,6 +562,8 @@ function init_video_showcase() {
         const percentage = (player.currentTime / player.duration) * 100;
         progressSlider.value = percentage;
         progressFill.style.width = percentage + "%";
+        fullscreenSlider.value = percentage;
+        fullscreenFill.style.width = percentage + "%";
       }
       currentTimeDisplay.textContent = formatTime(player.currentTime);
     }
@@ -563,6 +584,8 @@ function init_video_showcase() {
       isSeeking = true;
       const percentage = Number(progressSlider.value);
       progressFill.style.width = percentage + "%";
+      fullscreenSlider.value = percentage;
+      fullscreenFill.style.width = percentage + "%";
       if (player.duration) {
         currentTimeDisplay.textContent = formatTime((percentage / 100) * player.duration);
       }
@@ -623,6 +646,7 @@ function init_video_showcase() {
       fullscreenEnterIcon.style.display = isFullscreen ? "none" : "block";
       fullscreenExitIcon.style.display = isFullscreen ? "block" : "none";
       wrapper.classList.toggle("is-fullscreen", isFullscreen);
+      showControls();
 
       const customCursor = document.querySelector(".custom-cursor");
       if (customCursor) {
@@ -638,6 +662,9 @@ function init_video_showcase() {
     let idleTimeout = null;
 
     function showControls() {
+      if (!wrapper.classList.contains("has-started")) {
+        return;
+      }
       controls.classList.remove("is-hidden");
       const customCursor = document.querySelector(".custom-cursor");
       if (customCursor) {
@@ -647,31 +674,22 @@ function init_video_showcase() {
     }
 
     function hideControls() {
-      if (!player.paused && !isSeeking) {
-        controls.classList.add("is-hidden");
-        const customCursor = document.querySelector(".custom-cursor");
-        if (customCursor && wrapper.matches(":hover")) {
-          customCursor.classList.add("is-video-playing-idle");
-        }
-      }
+      controls.classList.add("is-hidden");
     }
 
     function resetIdleTimer() {
       if (idleTimeout) {
         clearTimeout(idleTimeout);
       }
-      if (!player.paused && !isSeeking) {
-        idleTimeout = setTimeout(hideControls, 2500);
-      }
+      idleTimeout = setTimeout(hideControls, 4000);
     }
 
     wrapper.addEventListener("mousemove", showControls);
     wrapper.addEventListener("mouseenter", showControls);
+    wrapper.addEventListener("pointerdown", showControls);
+    wrapper.addEventListener("focusin", showControls);
     wrapper.addEventListener("mouseleave", function () {
-      if (idleTimeout) {
-        clearTimeout(idleTimeout);
-      }
-      hideControls();
+      resetIdleTimer();
     });
   }
 
@@ -686,10 +704,7 @@ function init_video_showcase() {
     storage_set("triolemaitre_media_volume", String(player.volume));
   });
 
-  window.addEventListener("beforeunload", save_media_position);
-
-  const initialIndex = Number.isInteger(storedIndex) && storedIndex >= 0 && storedIndex < MEDIA_LIST.length ? storedIndex : 0;
-  select_media(initialIndex, false);
+  select_media(0, false);
 }
 
 function select_media(index, shouldPlay) {
@@ -712,9 +727,14 @@ function select_media(index, shouldPlay) {
     pendingMediaMetadataHandler = null;
   }
 
-  save_media_position();
   SITE_STATE.currentMedia = index;
   storage_set("triolemaitre_media_index", String(index));
+
+  if (shouldPlay) {
+    storage_set("triolemaitre_media_time_" + index, "0");
+    document.querySelector(".progress-track-fill").style.width = "0%";
+    document.querySelector(".progress-slider").value = "0";
+  }
 
   function restorePosition() {
     pendingMediaMetadataHandler = null;
@@ -722,14 +742,13 @@ function select_media(index, shouldPlay) {
       return;
     }
 
-    const saved = Number(storage_get("triolemaitre_media_time_" + index, "0"));
-    if (Number.isFinite(saved) && saved > 0 && saved < player.duration - 2) {
-      player.currentTime = saved;
-    }
+    player.currentTime = 0;
   }
 
   if (source.getAttribute("src") !== item.src) {
     player.pause();
+    player.closest(".video-wrapper").classList.remove("has-started");
+    document.querySelector(".progress-track-fill").style.width = "0%";
     source.setAttribute("src", item.src);
     pendingMediaMetadataHandler = restorePosition;
     player.addEventListener("loadedmetadata", pendingMediaMetadataHandler, { once: true });
@@ -764,16 +783,14 @@ function select_media(index, shouldPlay) {
   document.querySelectorAll("[data-media-index]").forEach(function (button) {
     const active = Number(button.getAttribute("data-media-index")) === index;
     button.classList.toggle("is-active", active);
+    if (active) {
+      const track = button.closest(".session-track");
+      const layout = button.closest(".player-layout");
+      track.appendChild(layout.querySelector(".progress-track-fill"));
+      track.appendChild(layout.querySelector(".progress-slider"));
+    }
     button.setAttribute("aria-pressed", String(active));
   });
-}
-
-function save_media_position() {
-  const player = document.getElementById("session-player");
-
-  if (player && Number.isFinite(player.currentTime) && player.currentTime > 0) {
-    storage_set("triolemaitre_media_time_" + SITE_STATE.currentMedia, String(player.currentTime));
-  }
 }
 
 function storage_get(key, fallback) {

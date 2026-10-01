@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Trio Lemaître — Jazz, Soul &amp; Hip-Hop live</title>
+    <title>Trio Lemaître</title>
     <meta name="description" content="Trio Lemaître verbindet Jazz, Soul und Hip-Hop zu einem urbanen Livesound aus Geige, Gitarre, Bass, Gesang, Rap und Improvisation. Jetzt für Festival, Konzert oder Event anfragen.">
     <meta name="keywords" content="Trio Lemaître, Band, Jazz, Soul, Hip-Hop, Liveband, Festival, Konzert, Event, Booking">
     <meta name="theme-color" content="#79a8ba">
@@ -12,7 +12,7 @@
     <meta property="og:type" content="website">
     <meta property="og:locale" content="de_DE">
     <meta property="og:site_name" content="Trio Lemaître">
-    <meta property="og:title" content="Trio Lemaître — Jazz, Soul &amp; Hip-Hop live">
+    <meta property="og:title" content="Trio Lemaître">
     <meta property="og:description" content="Drei Cousins, eine Klangsprache: urbane Neuinterpretationen, pulsierende Grooves und Raum für Liveimprovisation.">
     <meta property="og:image" content="media/image/og-trio-lemaitre.jpg">
     <meta property="og:image:type" content="image/jpeg">
@@ -48,16 +48,16 @@
     <script src="common.js"></script>
     <script>
       const META = {
-        title: "Trio Lemaître — Jazz, Soul & Hip-Hop live",
+        title: "Trio Lemaître",
         page: "home"
       };
 
       const MEDIA_LIST = [
-        { title: "Army of Me", src: "media/video/army-of-me.mp4" },
+        { title: "Sunny", src: "media/video/sunny.mp4" },
         { title: "Black Orpheus", src: "media/video/black-orpheus.mp4" },
         { title: "Get Out", src: "media/video/get-out.mp4" },
         { title: "Sir Duke", src: "media/video/sir-duke.mp4" },
-        { title: "Sunny", src: "media/video/sunny.mp4" }
+        { title: "Army of Me", src: "media/video/army-of-me.mp4" }
       ];
 
       function post_init() {
@@ -121,12 +121,16 @@
             <div class="sound-video-stack">
               <div class="video-frame">
                 <div class="video-wrapper">
-                  <video id="session-player" preload="none" playsinline poster="media/image/hero.webp" aria-label="Live Session: Army of Me" aria-describedby="session-description">
-                    <source src="media/video/army-of-me.mp4" type="video/mp4">
+                  <video id="session-player" preload="none" playsinline poster="media/image/hero.webp" aria-label="Live Session: Sunny">
+                    <source src="media/video/sunny.mp4" type="video/mp4">
                     Dein Browser unterstützt das Video-Element nicht.
                   </video>
                   
-                  <div class="custom-video-controls is-hidden" aria-label="Video-Steuerung">
+                  <button class="video-start-button" type="button" aria-label="Video abspielen">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                  </button>
+                  <div class="video-controls-slot">
+              <div class="custom-video-controls is-hidden" aria-label="Video-Steuerung">
                     <button class="control-btn play-pause-btn" aria-label="Abspielen">
                       <svg class="icon icon-play" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M8 5v14l11-7z"/>
@@ -136,15 +140,14 @@
                       </svg>
                     </button>
 
-                    <div class="progress-container">
+                    <div class="fullscreen-progress">
                       <span class="time-display current-time">00:00</span>
                       <div class="slider-wrapper">
-                        <div class="slider-track-fill progress-track-fill" style="width: 0%;"></div>
-                        <input type="range" class="progress-slider" min="0" max="100" value="0" step="0.01" aria-label="Fortschritt">
+                        <div class="slider-track-fill fullscreen-progress-fill" style="width: 0%;"></div>
+                        <input type="range" class="fullscreen-progress-slider" min="0" max="100" value="0" step="0.01" aria-label="Videofortschritt im Vollbild">
                       </div>
                       <span class="time-display duration-time">00:00</span>
                     </div>
-
                     <div class="volume-container">
                       <button class="control-btn mute-btn" aria-label="Stummschalten">
                         <svg class="icon icon-volume-up" viewBox="0 0 24 24" fill="currentColor">
@@ -169,42 +172,54 @@
                       </svg>
                     </button>
                   </div>
+                  </div>
                 </div>
-                <div class="video-meta" id="session-description">
-                  <span id="session-title" aria-live="polite">Army of Me</span>
-                  <span id="session-counter">01 / 05</span>
-                </div>
+
               </div>
 
 
             </div>
 
+            <div class="player-panel">
             <div class="session-list" aria-label="Live Sessions auswählen">
-              <button class="session-button is-active" type="button" data-media-index="0" aria-pressed="true">
+              <div class="session-track">
+<div class="slider-track-fill progress-track-fill" style="width: 0%;" aria-hidden="true"></div>
+<input type="range" class="progress-slider" min="0" max="100" value="0" step="0.01" aria-label="Videofortschritt">
+<button class="session-button is-active" type="button" data-media-index="0" aria-pressed="true">
                 <span class="session-button__number">01</span>
-                <span class="session-button__title">Army of Me</span>
+                <span class="session-button__title">Sunny</span>
                 <span class="session-button__arrow" aria-hidden="true">▶</span>
               </button>
-              <button class="session-button" type="button" data-media-index="1" aria-pressed="false">
+</div>
+              <div class="session-track">
+<button class="session-button" type="button" data-media-index="1" aria-pressed="false">
                 <span class="session-button__number">02</span>
                 <span class="session-button__title">Black Orpheus</span>
                 <span class="session-button__arrow" aria-hidden="true">▶</span>
               </button>
-              <button class="session-button" type="button" data-media-index="2" aria-pressed="false">
+</div>
+              <div class="session-track">
+<button class="session-button" type="button" data-media-index="2" aria-pressed="false">
                 <span class="session-button__number">03</span>
                 <span class="session-button__title">Get Out</span>
                 <span class="session-button__arrow" aria-hidden="true">▶</span>
               </button>
-              <button class="session-button" type="button" data-media-index="3" aria-pressed="false">
+</div>
+              <div class="session-track">
+<button class="session-button" type="button" data-media-index="3" aria-pressed="false">
                 <span class="session-button__number">04</span>
                 <span class="session-button__title">Sir Duke</span>
                 <span class="session-button__arrow" aria-hidden="true">▶</span>
               </button>
-              <button class="session-button" type="button" data-media-index="4" aria-pressed="false">
+</div>
+              <div class="session-track">
+<button class="session-button" type="button" data-media-index="4" aria-pressed="false">
                 <span class="session-button__number">05</span>
-                <span class="session-button__title">Sunny</span>
+                <span class="session-button__title">Army of Me</span>
                 <span class="session-button__arrow" aria-hidden="true">▶</span>
               </button>
+</div>
+            </div>
             </div>
               <a class="instagram-link" href="https://www.instagram.com/lemaitre.musik/" target="_blank" rel="noreferrer">
                 <span class="instagram-link__label">Weitere Eindrücke<br>auf Instagram</span>
