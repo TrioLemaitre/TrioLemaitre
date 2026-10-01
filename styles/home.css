@@ -303,10 +303,12 @@
 
 .sound-video-stack {
   display: grid;
+  grid-area: video;
   gap: 1rem;
 }
 
 .instagram-link {
+  grid-area: instagram;
   display: inline-flex;
   width: fit-content;
   align-items: center;
@@ -365,6 +367,7 @@
 
 .player-layout {
   display: grid;
+  grid-template-areas: "video sessions" "instagram sessions";
   grid-template-columns: minmax(0, 1.5fr) minmax(19rem, 0.55fr);
   gap: clamp(1.5rem, 3vw, 3rem);
 }
@@ -615,6 +618,7 @@ input.volume-slider:hover::-moz-range-thumb {
 }
 
 .session-list {
+  grid-area: sessions;
   display: flex;
   flex-direction: column;
   border-top: 1px solid rgba(248, 245, 238, 0.45);
@@ -1101,6 +1105,12 @@ input.volume-slider:hover::-moz-range-thumb {
 
   .player-layout {
     grid-template-columns: 1fr;
+    grid-template-areas: "video" "sessions" "instagram";
+    row-gap: 0;
+  }
+
+  .player-layout > .instagram-link {
+    margin-top: 1.5rem;
   }
 
   .session-list {
@@ -1122,11 +1132,47 @@ input.volume-slider:hover::-moz-range-thumb {
     min-height: 42rem;
   }
 
+  .hero-media {
+    display: none;
+  }
+
   .hero-portrait {
-    left: 45%;
-    bottom: 5.8rem;
-    width: 78%;
-    height: 58%;
+    inset: 0;
+    transform: none;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-portrait.has-spotlight {
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+
+  .band-title-line {
+    white-space: normal;
+  }
+
+  .statement-grid > *,
+  .sound-heading > *,
+  .band-intro > *,
+  .booking-content,
+  .booking-bottom,
+  .booking-form-group {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .home section :is(h2, h3, p, blockquote),
+  .instagram-link__label {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+  }
+
+  .instagram-link {
+    min-width: 0;
+    max-width: 100%;
+    margin-left: 0;
   }
 
   .hero-title {
@@ -1249,10 +1295,7 @@ input.volume-slider:hover::-moz-range-thumb {
   }
 
   .booking-image {
-    height: 115vw;
-    max-height: 48rem;
-    border-top: 1px solid var(--color-ink);
-    border-left: 0;
+    display: none;
   }
 }
 
@@ -1263,10 +1306,6 @@ input.volume-slider:hover::-moz-range-thumb {
 
   .hero-title {
     top: 4.75rem;
-  }
-
-  .hero-portrait {
-    width: 84%;
   }
 
   .statement-title,
