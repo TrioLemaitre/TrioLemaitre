@@ -324,6 +324,15 @@ article {
   border-top: 1px solid rgba(23, 23, 20, 0.35);
 }
 
+.legal section > h2 {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.legal section > :not(h2) {
+  grid-column: 2;
+}
+
 .legal section p,
 .legal section li {
   font-size: 1rem;
@@ -404,6 +413,11 @@ article {
   .legal section {
     grid-template-columns: 1fr;
     gap: 0.75rem;
+  }
+
+  .legal section > h2,
+  .legal section > :not(h2) {
+    grid-column: 1;
   }
 }
 
