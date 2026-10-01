@@ -1,0 +1,12 @@
+{
+  "name": "trio-lemaitre-website",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check:worker": "node --check workers/contact.js",
+    "deploy:worker": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

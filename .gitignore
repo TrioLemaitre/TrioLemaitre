@@ -2,3 +2,7 @@
 Photos/
 Videos/
 
+# Cloudflare Worker tooling
+node_modules/
+.wrangler/
+

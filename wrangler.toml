@@ -1,0 +1,12 @@
+name = "trio-lemaitre-contact"
+main = "workers/contact.js"
+compatibility_date = "2026-10-01"
+workers_dev = false
+
+routes = [
+  { pattern = "trio-lemaitre.de/api/contact", zone_name = "trio-lemaitre.de" },
+  { pattern = "www.trio-lemaitre.de/api/contact", zone_name = "trio-lemaitre.de" }
+]
+
+[[send_email]]
+name = "CONTACT_EMAIL"

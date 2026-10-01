@@ -835,7 +835,7 @@ function init_booking_form() {
       }
 
       if (!acceptPrivacyInput || !acceptPrivacyInput.checked) {
-        alert("Bitte lest und akzeptiert die Datenschutzerklärung.");
+        alert("Bitte lest die Datenschutzerklärung und bestätigt die Kenntnisnahme.");
         return;
       }
 
@@ -852,17 +852,15 @@ function init_booking_form() {
         date: dateInput ? dateInput.value.trim() : "",
         location: locationInput.value.trim(),
         message: messageInput.value.trim(),
-        _subject: "Neue Kontakt-Anfrage - Trio Lemaître",
-        _captcha: "false",
-        _template: "table"
+        privacy_notice_acknowledged: "Ja"
       };
 
-      const honeyInput = form.querySelector('input[name="_honey"]');
+      const honeyInput = form.querySelector('input[name="website"]');
       if (honeyInput && honeyInput.value) {
-        formData["_honey"] = honeyInput.value;
+        formData.website = honeyInput.value;
       }
 
-      fetch("https://formsubmit.co/ajax/lemaitre.musik@gmail.com", {
+      fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -890,7 +888,7 @@ function init_booking_form() {
       })
       .catch(function (error) {
         console.error("Error submitting booking form:", error);
-        alert("Es gab ein Problem beim Senden des Formulars. Bitte versucht es später noch einmal oder wendet euch direkt per Mail an lemaitre.musik@gmail.com");
+        alert("Es gab ein Problem beim Senden des Formulars. Bitte versucht es später noch einmal oder wendet euch direkt per Mail an kontakt@trio-lemaitre.de");
         if (submitText) {
           submitText.textContent = originalText;
         }

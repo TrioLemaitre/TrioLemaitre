@@ -34,7 +34,7 @@
         "@type": "MusicGroup",
         "name": "Trio Lemaître",
         "genre": ["Jazz", "Soul", "Hip-Hop"],
-        "email": "lemaitre.musik@gmail.com",
+        "email": "kontakt@trio-lemaitre.de",
         "telephone": "+49 157 87940129",
         "sameAs": ["https://www.instagram.com/lemaitre.musik/"],
         "member": [
@@ -310,14 +310,9 @@
               </a>
             </div>
 
-            <form id="bookingForm" action="https://formsubmit.co/lemaitre.musik@gmail.com" method="POST" novalidate class="booking-form">
+            <form id="bookingForm" action="/api/contact" method="POST" novalidate class="booking-form">
               <!-- Honeypot -->
-              <input type="text" name="_honey" style="display:none">
-
-              <!-- FormSubmit.co Configuration -->
-              <input type="hidden" name="_subject" value="Neue Booking-Anfrage - Trio Lemaître">
-              <input type="hidden" name="_captcha" value="false">
-              <input type="hidden" name="_template" value="table">
+              <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none">
 
               <!-- Name Input -->
               <div class="booking-form-group">
@@ -351,8 +346,8 @@
 
               <!-- Datenschutz Checkbox -->
               <label class="booking-form-checkbox" for="bookingAcceptPrivacy">
-                <input type="checkbox" id="bookingAcceptPrivacy" required>
-                <span>Ich habe die <a href="datenschutz.html" target="_blank">Datenschutzerklärung</a> gelesen und akzeptiere sie.</span>
+                <input type="checkbox" id="bookingAcceptPrivacy" name="privacy_notice_acknowledged" value="Ja" required>
+                <span>Ich habe die <a href="datenschutz.html" target="_blank">Datenschutzerklärung</a> zur Kenntnis genommen.</span>
               </label>
 
               <!-- Submit Button -->
