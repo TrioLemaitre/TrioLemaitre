@@ -41,6 +41,7 @@ function load_components(components) {
 }
 
 async function fetchHTML(url, id) {
+  let value;
   try {
     const response = await fetch(url);
 
@@ -48,12 +49,13 @@ async function fetchHTML(url, id) {
       throw new Error("HTTP " + response.status);
     }
 
-    const value = await response.text();
-    loadElement(id, value);
+    value = await response.text();
   } catch (error) {
     console.error("Komponente konnte nicht geladen werden:", id, error);
     settle_component(id, false);
+    return;
   }
+  loadElement(id, value);
 }
 
 function loadElement(id, html) {
@@ -474,24 +476,24 @@ function init_video_showcase() {
 
   // Custom Video Controls initialization
   const wrapper = player.closest(".video-wrapper");
-  if (wrapper) {
-    const panel = player.closest(".player-layout").querySelector(".player-panel");
+  const layout = player.closest(".player-layout");
+  const progressContainer = layout && (layout.querySelector(".session-track") || layout.querySelector(".progress-container") || layout.querySelector(".video-meta"));
+  if (wrapper && wrapper.querySelector(".custom-video-controls") && progressContainer && progressContainer.querySelector(".progress-slider") && progressContainer.querySelector(".progress-track-fill")) {
     const controls = wrapper.querySelector(".custom-video-controls");
     const startButton = wrapper.querySelector(".video-start-button");
     const playPauseBtn = controls.querySelector(".play-pause-btn");
     const playIcon = playPauseBtn.querySelector(".icon-play");
     const pauseIcon = playPauseBtn.querySelector(".icon-pause");
     
-    const progressContainer = panel.querySelector(".session-track");
     const progressSlider = progressContainer.querySelector(".progress-slider");
     const progressFill = progressContainer.querySelector(".progress-track-fill");
     const fullscreenSlider = controls.querySelector(".fullscreen-progress-slider");
     const fullscreenFill = controls.querySelector(".fullscreen-progress-fill");
-    fullscreenSlider.addEventListener("input", function () {
+    if (fullscreenSlider) fullscreenSlider.addEventListener("input", function () {
       progressSlider.value = fullscreenSlider.value;
       progressSlider.dispatchEvent(new Event("input"));
     });
-    fullscreenSlider.addEventListener("change", function () {
+    if (fullscreenSlider) fullscreenSlider.addEventListener("change", function () {
       progressSlider.value = fullscreenSlider.value;
       progressSlider.dispatchEvent(new Event("change"));
     });
@@ -526,7 +528,7 @@ function init_video_showcase() {
     }
 
     playPauseBtn.addEventListener("click", togglePlay);
-    startButton.addEventListener("click", togglePlay);
+    if (startButton) startButton.addEventListener("click", togglePlay);
     player.addEventListener("click", togglePlay);
 
     player.addEventListener("play", function () {
@@ -549,8 +551,8 @@ function init_video_showcase() {
     player.addEventListener("ended", function () {
       progressSlider.value = 0;
       progressFill.style.width = "0%";
-      fullscreenSlider.value = "0";
-      fullscreenFill.style.width = "0%";
+      if (fullscreenSlider) fullscreenSlider.value = "0";
+      if (fullscreenFill) fullscreenFill.style.width = "0%";
       currentTimeDisplay.textContent = formatTime(0);
       playIcon.style.display = "block";
       pauseIcon.style.display = "none";
@@ -562,8 +564,8 @@ function init_video_showcase() {
         const percentage = (player.currentTime / player.duration) * 100;
         progressSlider.value = percentage;
         progressFill.style.width = percentage + "%";
-        fullscreenSlider.value = percentage;
-        fullscreenFill.style.width = percentage + "%";
+        if (fullscreenSlider) fullscreenSlider.value = percentage;
+        if (fullscreenFill) fullscreenFill.style.width = percentage + "%";
       }
       currentTimeDisplay.textContent = formatTime(player.currentTime);
     }
@@ -584,8 +586,8 @@ function init_video_showcase() {
       isSeeking = true;
       const percentage = Number(progressSlider.value);
       progressFill.style.width = percentage + "%";
-      fullscreenSlider.value = percentage;
-      fullscreenFill.style.width = percentage + "%";
+      if (fullscreenSlider) fullscreenSlider.value = percentage;
+      if (fullscreenFill) fullscreenFill.style.width = percentage + "%";
       if (player.duration) {
         currentTimeDisplay.textContent = formatTime((percentage / 100) * player.duration);
       }
@@ -691,6 +693,8 @@ function init_video_showcase() {
     wrapper.addEventListener("mouseleave", function () {
       resetIdleTimer();
     });
+  } else {
+    player.controls = true;
   }
 
   buttons.forEach(function (button) {
@@ -732,8 +736,10 @@ function select_media(index, shouldPlay) {
 
   if (shouldPlay) {
     storage_set("triolemaitre_media_time_" + index, "0");
-    document.querySelector(".progress-track-fill").style.width = "0%";
-    document.querySelector(".progress-slider").value = "0";
+    const fill = document.querySelector(".progress-track-fill");
+    if (fill) fill.style.width = "0%";
+    const slider = document.querySelector(".progress-slider");
+    if (slider) slider.value = "0";
   }
 
   function restorePosition() {
@@ -748,7 +754,8 @@ function select_media(index, shouldPlay) {
   if (source.getAttribute("src") !== item.src) {
     player.pause();
     player.closest(".video-wrapper").classList.remove("has-started");
-    document.querySelector(".progress-track-fill").style.width = "0%";
+    const fill = document.querySelector(".progress-track-fill");
+    if (fill) fill.style.width = "0%";
     source.setAttribute("src", item.src);
     pendingMediaMetadataHandler = restorePosition;
     player.addEventListener("loadedmetadata", pendingMediaMetadataHandler, { once: true });
@@ -786,8 +793,12 @@ function select_media(index, shouldPlay) {
     if (active) {
       const track = button.closest(".session-track");
       const layout = button.closest(".player-layout");
-      track.appendChild(layout.querySelector(".progress-track-fill"));
-      track.appendChild(layout.querySelector(".progress-slider"));
+      const fill = layout.querySelector(".progress-track-fill");
+      const slider = layout.querySelector(".progress-slider");
+      if (track && fill && slider) {
+        track.appendChild(fill);
+        track.appendChild(slider);
+      }
     }
     button.setAttribute("aria-pressed", String(active));
   });
