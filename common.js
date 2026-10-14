@@ -223,6 +223,55 @@ function init_footer() {
   }
 }
 
+// Scrolls in-page anchors noticeably slower than the browser's native smooth scroll.
+function init_slow_anchor_scroll(selector) {
+  const content = document.getElementById("content");
+
+  if (!content) {
+    return;
+  }
+
+  document.querySelectorAll(selector).forEach(function (link) {
+    link.addEventListener("click", function (event) {
+      const id = (link.getAttribute("href") || "").slice(1);
+      const target = id && document.getElementById(id);
+
+      if (!target || prefers_reduced_motion()) {
+        return;
+      }
+
+      event.preventDefault();
+
+      const padding = parseFloat(getComputedStyle(content).scrollPaddingTop) || 0;
+      const start = content.scrollTop;
+      const end = Math.min(
+        target.getBoundingClientRect().top - content.getBoundingClientRect().top + start - padding,
+        content.scrollHeight - content.clientHeight
+      );
+      const distance = end - start;
+      const duration = Math.min(2400, 1100 + Math.abs(distance) * 0.35);
+      const startTime = performance.now();
+
+      content.style.scrollBehavior = "auto";
+
+      function step(now) {
+        const t = Math.min((now - startTime) / duration, 1);
+        const eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        content.scrollTop = start + distance * eased;
+
+        if (t < 1) {
+          requestAnimationFrame(step);
+        } else {
+          content.style.scrollBehavior = "";
+          history.replaceState(null, "", "#" + id);
+        }
+      }
+
+      requestAnimationFrame(step);
+    });
+  });
+}
+
 function init_content_scroll() {
   const content = document.getElementById("content");
 

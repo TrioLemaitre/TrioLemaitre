@@ -26,7 +26,7 @@
     <link rel="preload" as="fetch" href="components/footer.html" crossorigin>
     <link rel="stylesheet" href="styles/fonts.css">
     <link rel="stylesheet" href="styles/general.css">
-    <link rel="stylesheet" href="styles/home.css?v=player-20261001-2">
+    <link rel="stylesheet" href="styles/home.css?v=events-20261014">
 
     <script type="application/ld+json">
       {
@@ -45,7 +45,7 @@
       }
     </script>
 
-    <script src="common.js?v=player-20261001-2"></script>
+    <script src="common.js?v=events-20261014"></script>
     <script>
       const META = {
         title: "Trio Lemaître",
@@ -62,6 +62,7 @@
 
       function post_init() {
         init_video_showcase();
+        init_slow_anchor_scroll(".hero-actions a[href^='#']");
       }
 
       load_components(["header", "footer"]);
@@ -96,6 +97,11 @@
           <a class="button-link button-link--secondary" href="#kontakt">
             <span>Band anfragen</span>
             <span class="button-link__arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="button-link button-link--blitz" href="#events">
+            <svg class="blitz-badge__bolt" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M13.5 1 4 13.5h6.5L9 23l11-13.5h-6.8z"/></svg>
+            <span>Upcoming Event</span>
+            <span class="button-link__arrow" aria-hidden="true">↓</span>
           </a>
         </div>
 
@@ -219,37 +225,78 @@
                 <span class="session-button__arrow" aria-hidden="true">▶</span>
               </button>
 </div>
-            </div>
-            </div>
-              <a class="instagram-link" href="https://www.instagram.com/lemaitre.musik/" target="_blank" rel="noreferrer">
-                <span class="instagram-link__label">Weitere Eindrücke<br>auf Instagram</span>
-                <span class="instagram-button" aria-hidden="true">
-                  <svg class="instagram-button__shape" viewBox="0 0 100 100" focusable="false">
-                    <path d="M50 5C55 5 58 12 63 13C68 14 74 8 78 11C82 14 80 22 84 26C88 30 96 27 97 32C98 37 91 42 92 47C93 52 100 56 97 61C94 66 87 65 83 69C79 73 82 81 77 84C72 87 67 81 62 83C57 85 55 93 50 94C45 95 41 88 36 87C31 86 26 92 22 89C18 86 21 78 17 74C13 70 5 73 4 68C3 63 10 58 9 53C8 48 1 44 3 39C5 34 13 35 17 31C21 27 18 19 23 16C28 13 33 19 38 17C43 15 45 6 50 5Z"></path>
-                  </svg>
-                  <svg class="instagram-button__icon" viewBox="0 0 24 24" fill="none" focusable="false">
-                    <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.8"></rect>
-                    <circle cx="12" cy="12" r="4.1" stroke="currentColor" stroke-width="1.8"></circle>
-                    <circle cx="17.4" cy="6.8" r="1.1" fill="currentColor"></circle>
-                  </svg>
-                </span>
+              <div class="session-track">
+<a class="session-button session-button--instagram" href="https://www.instagram.com/lemaitre.musik/" target="_blank" rel="noreferrer">
+                <span class="session-button__title">Weitere Eindrücke auf Instagram</span>
+                <svg class="session-button__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                  <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.8"></rect>
+                  <circle cx="12" cy="12" r="4.1" stroke="currentColor" stroke-width="1.8"></circle>
+                  <circle cx="17.4" cy="6.8" r="1.1" fill="currentColor"></circle>
+                </svg>
               </a>
+</div>
+            </div>
+            </div>
           </div>
-          <div class="live-occasions" aria-label="Festivals, Konzerte und Events">
-            <article class="live-occasion live-occasion--festival" data-reveal>
-              <span class="live-occasion__mark" aria-hidden="true">✦</span>
-              <h3>Festivals</h3>
-              <p>Pulsierende Grooves, Rap und spontane Improvisation – ein Set mit Energie, Kontrast und klarer eigener Handschrift.</p>
-            </article>
-            <article class="live-occasion live-occasion--concert" data-reveal>
-              <span class="live-occasion__mark" aria-hidden="true">●</span>
-              <h3>Konzerte</h3>
-              <p>Nuanciert genug für den intimen Raum, druckvoll genug für den vollen Saal: vom zarten Gesang bis zum Bounce des Beats.</p>
-            </article>
-            <article class="live-occasion live-occasion--event" data-reveal>
-              <span class="live-occasion__mark" aria-hidden="true">↗</span>
-              <h3>Events</h3>
-              <p>Ein urbaner Livesound für besondere Abende – persönlich, musikalisch offen und weit entfernt von austauschbarer Hintergrundmusik.</p>
+        </div>
+      </section>
+
+      <section class="events" id="events" data-nav-section aria-labelledby="events-title">
+        <div class="section-inner">
+          <div class="events-heading" data-reveal>
+            <p class="eyebrow">Die Events</p>
+            <h2 id="events-title">Live-Events</h2>
+          </div>
+
+          <div class="events-list" data-reveal>
+            <article class="upcoming-event" id="upcoming" aria-labelledby="upcoming-title">
+              <figure class="upcoming-flyer">
+                <img src="media/image/flyer-rosenau-2026-11-04.webp" alt="Flyer: Trio Lemaître live im Hofgut Rosenau, Tübingen, Mittwoch 4.11.26, 19 Uhr" width="900" height="1600" loading="lazy">
+              </figure>
+
+              <div class="upcoming-details">
+                <h3 class="blitz-badge" id="upcoming-title">
+                  <svg class="blitz-badge__bolt" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M13.5 1 4 13.5h6.5L9 23l11-13.5h-6.8z"/></svg>
+                  <span>Upcoming Event</span>
+                </h3>
+
+                <dl class="upcoming-list">
+                  <div class="upcoming-row">
+                    <dt>Datum</dt>
+                    <dd>Mittwoch, 4.11.26</dd>
+                  </div>
+                  <div class="upcoming-row">
+                    <dt>Beginn</dt>
+                    <dd>19:00 Uhr</dd>
+                  </div>
+                  <div class="upcoming-row">
+                    <dt>Ort</dt>
+                    <dd>Hofgut Rosenau<br><small>Rosenau 15, Tübingen</small></dd>
+                  </div>
+                  <div class="upcoming-row">
+                    <dt>Eintritt</dt>
+                    <dd>14&nbsp;€<br><small>Ermäßigt 7&nbsp;€ (Schüler &amp; Studenten)</small></dd>
+                  </div>
+                  <div class="upcoming-row">
+                    <dt>Bar</dt>
+                    <dd>Geöffnet<br><small>Kein Verzehr</small></dd>
+                  </div>
+                </dl>
+
+                <div class="upcoming-tickets">
+                  <p class="upcoming-tickets__label">Ticketreservierung</p>
+                  <div class="upcoming-tickets__actions">
+                    <a class="ticket-box ticket-box--mail" href="mailto:mail@hofgutrosenau-tuebingen.de?subject=Ticketreservierung%20Trio%20Lema%C3%AEtre%20am%204.11.26">
+                      <span class="ticket-box__label">Per Mail reservieren <span aria-hidden="true">↗</span></span>
+                      <span class="ticket-box__value">mail@hofgutrosenau-tuebingen.de</span>
+                    </a>
+                    <a class="ticket-box ticket-box--phone" href="tel:+49707168866">
+                      <span class="ticket-box__label">Anrufen <span aria-hidden="true">↗</span></span>
+                      <span class="ticket-box__value">07071 68866</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
             </article>
           </div>
         </div>
