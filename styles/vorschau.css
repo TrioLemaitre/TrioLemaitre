@@ -1,0 +1,127 @@
+/* Nur auf vorschau.html: ZT Formom statt Baskervville. Beim Übernehmen auf index.html in fonts.css/general.css/home.css einarbeiten. */
+@font-face {
+  font-family: "ZT Formom";
+  src: url("../fonts/ZTFormom/ZTFormom-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ZT Formom";
+  src: url("../fonts/ZTFormom/ZTFormom-Oblique.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --font-editorial: "ZT Formom", Georgia, serif;
+}
+
+.font-baskerville {
+  font-family: var(--font-editorial);
+}
+
+/* Aus home.css hierher verschoben (nur Vorschau): Teal-Poster-Look aus der Affinity-Textur (filter #tl-teal in vorschau.html) */
+.fx-teal {
+  filter: url(#tl-teal);
+}
+
+.wide-portrait--dark {
+  width: 100%;
+  padding: clamp(1.5rem, 5vw, 4rem) var(--page-gutter);
+  background: #000;
+}
+
+.wide-portrait--dark figure {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  border: 0;
+}
+
+/* Überschriften komplett in ZT Formom, Laufweite normal */
+.statement-title,
+.statement-title em,
+.sound h2,
+.events h2,
+.band h2,
+.formats h2,
+.format-card h3,
+.booking-content h2,
+.font-baskerville {
+  font-family: var(--font-editorial);
+  font-weight: 400;
+  letter-spacing: normal;
+}
+
+/* Die ch-Breiten waren auf Gespenst Black abgestimmt und erzwingen bei ZT Formom unnötige Umbrüche */
+.sound h2,
+.band h2,
+.formats h2,
+.booking-content h2 {
+  max-width: none;
+}
+
+/* Booking-Formular: schwebende Labels statt Label + Platzhalter – pro Feld ist immer nur ein Text sichtbar */
+.booking-form .booking-form-group {
+  position: relative;
+  gap: 0;
+}
+
+.booking-form .booking-form-control {
+  padding: 1.5rem 0.9rem 0.55rem;
+  border-color: rgba(23, 23, 20, 0.45);
+  font-size: 1rem; /* 16px verhindert Auto-Zoom auf iOS */
+  line-height: 1.25;
+}
+
+.booking-form .booking-form-control:hover {
+  border-color: var(--color-ink);
+}
+
+.booking-form .booking-form-control::placeholder {
+  color: transparent;
+}
+
+.booking-form .booking-form-group label {
+  position: absolute;
+  top: 1.05rem;
+  left: calc(0.9rem + 1px);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.25;
+  text-transform: none;
+  letter-spacing: normal;
+  color: rgba(23, 23, 20, 0.65);
+  pointer-events: none;
+  transform-origin: left top;
+  transition: transform 160ms ease, color 160ms ease;
+}
+
+.booking-form .booking-form-group label small {
+  font-size: 0.85em;
+  opacity: 0.75;
+}
+
+.booking-form .booking-form-control:focus + label,
+.booking-form .booking-form-control:not(:placeholder-shown) + label {
+  transform: translateY(-0.62rem) scale(0.75);
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.booking-form .booking-form-control:user-invalid {
+  border-color: #8f1d14;
+  box-shadow: inset 0 0 0 1px #8f1d14;
+}
+
+.booking-form textarea.booking-form-control {
+  min-height: 7.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .booking-form .booking-form-group label {
+    transition: none;
+  }
+}
